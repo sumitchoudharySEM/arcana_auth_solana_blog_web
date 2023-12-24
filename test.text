@@ -1,0 +1,50 @@
+import { FC, useMemo } from "react";
+import { BlogProvider } from "src/context/Blog";
+import { Router } from "src/router";
+import {
+  ConnectionProvider,
+  WalletProvider,
+} from "@solana/wallet-adapter-react";
+import { PhantomWalletAdapter } from "@solana/wallet-adapter-wallets";
+import "./App.css";
+import { useEffect, useState } from "react";
+import { AuthProvider } from "@arcana/auth";
+import { Auth } from "@arcana/auth-react";
+import { useAuth } from "@arcana/auth-react";
+
+export const App = () => {
+  // const endpoint =
+  //   "https://muddy-aged-panorama.solana-devnet.discover.quiknode.pro/0fe7822c98ade63f96ae1be8e82d17b26d57cacc/";
+  // const wallets = useMemo(() => [new PhantomWalletAdapter()], []);
+
+  const { loading, isLoggedIn, connect, user } = useAuth();
+
+  if (loading) {
+    
+    return <p>Loading...</p>;
+  }
+  if (!isLoggedIn) {
+    return( 
+    <Auth/>
+    )
+  }
+  if (isLoggedIn) {
+    console.log(user);
+    return (
+      <>
+        <p>ho gya</p>
+        <h1>{user.address}</h1>
+        {/* <ConnectionProvider endpoint={endpoint}>
+          {" "}
+          <WalletProvider wallets={wallets} autoConnect>
+            <BlogProvider>
+              <Router />
+            </BlogProvider>
+          </WalletProvider>
+        </ConnectionProvider> */}
+      </>
+    );
+  }
+};
+
+export default App;
